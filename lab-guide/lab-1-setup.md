@@ -70,7 +70,7 @@
 1. Зарегистрируйте центральный репозиторий в локальном репозитории Git под именем `upstream`. Это потребуется, чтобы получать актуальное состояние ветки `main` оттуда. Для того, чтобы сделать это и проверить успешность, выполните следующие команды:
 
     ```bash
-    $ git remote add upstream https://github.com/UNN-ITMM-Software/devtools-course-practice
+    $ git remote add upstream https://github.com/Teddy-Hackers/devtools-course-practice
     $ git remote -v
     ```
 
@@ -222,12 +222,12 @@
 
 <!-- LINKS -->
 
-[actions]:      https://github.com/UNN-ITMM-Software/devtools-course-practice/actions
-[central-repo]: https://github.com/UNN-ITMM-Software/devtools-course-practice
+[actions]:      https://github.com/Teddy-Hackers/devtools-course-practice/actions
+[central-repo]: https://github.com/Teddy-Hackers/devtools-course-practice
 [help-git-mp2]: https://github.com/UNN-ITMM-Software/mp2-lab1-set#Инструкция-по-выполнению-работы
 [help-git]:     https://help.github.com/articles/set-up-git
 [help-fork]:    https://help.github.com/articles/fork-a-repo
 [help-pr]:      https://help.github.com/articles/using-pull-requests
 [imworkflow]:   https://git-scm.com/book/en/v2/Distributed-Git-Distributed-Workflows#Integration-Manager-Workflow
 [style-guide]:  https://google.github.io/styleguide/cppguide.html
-[setup-guide]: https://github.com/UNN-ITMM-Software/devtools-course-practice/blob/main/lab-guide/setup.md
+[setup-guide]: https://github.com/Teddy-Hackers/devtools-course-practice/blob/main/lab-guide/setup.md
