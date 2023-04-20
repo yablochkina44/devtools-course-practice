@@ -47,12 +47,15 @@ http.createServer(function (req, res) {
         body += chunk.toString();
     });
     req.on('end', () => {
-        body = JSON.parse(body);
-
-        if (body.review.state == "approved") {
-            checkReadiness(body.pull_request.number);
+        try {
+            body = JSON.parse(body);
+            if (body.review.state == "approved") {
+                checkReadiness(body.pull_request.number);
+            }
+        } catch(error) {
+            console.log(body);
+            console.log(error.message);
         }
-
         res.end();
     });
 }).listen(port);
