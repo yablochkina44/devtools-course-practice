@@ -57,7 +57,7 @@
 | АВЛ деревья |Ермолаев Д. 382003_3||
 | RB деревья |||
 | Множества |||
-| Priority queue |||
+| Priority queue | Зорин О.А. 382003_3 ||
 | d-куча |||
 | hashmap |||
 | template binary heap |||
