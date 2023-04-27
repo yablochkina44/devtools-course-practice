@@ -1,10 +1,13 @@
 const http = require('http');
-const { Octokit } = require("@octokit/core");
+const { Octokit } = require("@octokit/rest");
 const { createAppAuth } = require("@octokit/auth-app");
 
 const port = process.env.PORT || 80;
 
-const installationOctokit = new Octokit({
+const owner = "Teddy-Hackers";
+const repo = "devtools-course-practice";
+
+const octokit = new Octokit({
     authStrategy: createAppAuth,
     auth: {
       appId: 318270,
@@ -14,10 +17,10 @@ const installationOctokit = new Octokit({
 });
 
 async function putLabNumber(pull_id) {
-    const pullInfo = await installationOctokit.request("GET /repos/{owner}/{repo}/pulls/{pull_id}", {
-        owner: "Teddy-Hackers",
-        repo: "devtools-course-practice",
-        pull_id: pull_id,
+    const pullInfo = await octokit.rest.pulls.get({
+        owner: owner,
+        repo: repo,
+        pull_number: pull_id,
     });
 
     let task_id = pullInfo.data.title.match(/\d+/);
@@ -28,30 +31,30 @@ async function putLabNumber(pull_id) {
     if (task_id < 1 || task_id > 3)
         return;
 
-    const pullFiles = await installationOctokit.request("GET /repos/{owner}/{repo}/pulls/{pull_id}/files", {
-        owner: "Teddy-Hackers",
-        repo: "devtools-course-practice",
-        pull_id: pull_id,
+    const pullFiles = await octokit.rest.pulls.listFiles({
+        owner: owner,
+        repo: repo,
+        pull_number: pull_id,
     });
 
     if (pullFiles.data.length == 0 ||
         pullFiles.data.length == 1 && pullFiles.data[0].filename == "lab-guide/topics.md") {
         return;
     }
-    installationOctokit.request("POST /repos/{owner}/{repo}/issues/{pull_id}/labels", {
-        owner: "Teddy-Hackers",
-        repo: "devtools-course-practice",
-        pull_id: pull_id,
+    octokit.rest.issues.addLabels({
+        owner: owner,
+        repo: repo,
+        issue_number: pull_id,
         labels: ["lab " + task_id],
     });
 }
 
 async function checkReadiness(pull_id) {
     // Count number of unique approvers
-    const result = await installationOctokit.request("GET /repos/{owner}/{repo}/pulls/{pull_id}/reviews", {
-        owner: "Teddy-Hackers",
-        repo: "devtools-course-practice",
-        pull_id: pull_id,
+    const result = await octokit.rest.pulls.listReviews({
+        owner: owner,
+        repo: repo,
+        pull_number: pull_id,
     });
 
     let approvers = new Set();
@@ -65,18 +68,18 @@ async function checkReadiness(pull_id) {
         return;
 
     // Put a readiness label
-    installationOctokit.request("POST /repos/{owner}/{repo}/issues/{pull_id}/labels", {
-        owner: "Teddy-Hackers",
-        repo: "devtools-course-practice",
-        pull_id: pull_id,
+    octokit.rest.issues.addLabels({
+        owner: owner,
+        repo: repo,
+        issue_number: pull_id,
         labels: ["Ready for merge"],
     });
 }
 
 // Put labels to existing pull requests
 // installationOctokit.paginate(installationOctokit.rest.pulls.list, {
-//     owner: "Teddy-Hackers",
-//     repo: "devtools-course-practice",
+//     owner: owner,
+//     repo: repo,
 //     state: "all",
 //     sort: "created",
 //     direction: "asc",
@@ -88,6 +91,53 @@ async function checkReadiness(pull_id) {
 // });
 
 http.createServer(function (req, res) {
+    if (req.method == "GET") {
+        if (req.url !== "/names") {
+            res.end();
+            return;
+        }
+
+        let real_names = {};
+        octokit.paginate(octokit.rest.repos.listCommits, {
+            owner: owner,
+            repo: repo,
+            path: "lab-guide/topics.md",
+        })
+        .then(commits => {
+            let processed = 0;
+            commits.forEach(commit => {
+                octokit.rest.repos.getCommit({
+                    owner: owner,
+                    repo: repo,
+                    ref: commit.sha,
+                })
+                .then(commit_data => {
+                    processed += 1;
+                    commit_data.data.files.forEach(file => {
+                        if (file.filename == "lab-guide/topics.md") {
+                            let match_del = file.patch.match(/\-\|.*\|(.*)\|.*\|/);
+                            if (!match_del || match_del[1] != "")
+                                return;
+
+                            let match_add = file.patch.match(/\+\|.*\|(.*)\|.*\|/);
+                            if (!match_add || match_add.length < 2)
+                                return;
+
+                            real_names[commit_data.data.author.login] = match_add[1].trim();
+                        }
+                    });
+                    if (processed == commits.length) {
+                        res.statusCode = 200;
+                        res.setHeader('Content-Type', 'application/json');
+                        res.write(JSON.stringify(real_names));
+                        res.end();
+                    }
+                });
+            })
+        });
+        return;
+    }
+
     // Get JSON data for POST request
     let body = '';
     req.on('data', chunk => {
