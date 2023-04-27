@@ -91,6 +91,7 @@ async function checkReadiness(pull_id) {
 // });
 
 http.createServer(function (req, res) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
     if (req.method == "GET") {
         if (req.url !== "/names") {
             res.end();
