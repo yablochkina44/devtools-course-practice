@@ -12,16 +12,18 @@ class PriorityQueue {
   std::list<T> data;
  public:
   PriorityQueue();
+  explicit PriorityQueue(const T);
   PriorityQueue(const PriorityQueue &other);
-  PriorityQueue &operator=(const PriorityQueue &other);
-  ~PriorityQueue();
+
   void put(const T &value);
-  const T &top() const;
   void pop();
+  const T &top() const;
+
   T get();
   bool empty() const;
   size_t size() const;
   void clear();
+  PriorityQueue& operator=(const PriorityQueue& other);
 };
 
 #endif  // MODULES_PRIORITY_QUEUE_INCLUDE_PRIORITY_QUEUE_H_

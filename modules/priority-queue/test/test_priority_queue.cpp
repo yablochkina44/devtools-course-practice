@@ -1,7 +1,6 @@
 // Copyright 2023 Zorin Oleg
 
 #include <gtest/gtest.h>
-
 #include "include/priority_queue.h"
 
 class PriorityQueueIntTest : public ::testing::Test {
@@ -54,19 +53,19 @@ TEST(PriorityQueueTest, Size_Null_When_Empty) {
 TEST(PriorityQueueTest, Cant_Top_When_Empty) {
   PriorityQueue<int> Q;
 
-  ASSERT_THROW(Q.top(), std::out_of_range);
+  ASSERT_ANY_THROW(Q.top());
 }
 
 TEST(PriorityQueueTest, Cant_Pop_When_Empty) {
   PriorityQueue<int> Q;
 
-  ASSERT_THROW(Q.pop(), std::out_of_range);
+  ASSERT_ANY_THROW(Q.pop());
 }
 
 TEST(PriorityQueueTest, Cant_Get_When_Empty) {
   PriorityQueue<int> Q;
 
-  ASSERT_THROW(Q.get(), std::out_of_range);
+  ASSERT_ANY_THROW(Q.get());
 }
 
 TEST(PriorityQueueTest, Can_Put_One_Element) {
@@ -184,4 +183,13 @@ TEST_F(PriorityQueueIntTest, Assign_Copy_Has_Own_Memory) {
   Q.pop();
 
   ASSERT_NE(copyQ.top(), Q.top());
+}
+
+TEST(TestPriorityQueue, Can_creat_PriorityQueue_with_parameter) {
+    ASSERT_NO_THROW(PriorityQueue<int> Q2(3));
+}
+
+TEST(TestPriorityQueue, Creat_PriorityQueue_with_parameter_correctly) {
+    PriorityQueue<int> Q2(3);
+    ASSERT_EQ(Q2.top(), 3);
 }

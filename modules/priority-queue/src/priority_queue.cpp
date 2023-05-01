@@ -6,9 +6,6 @@ template<class T>
 PriorityQueue<T>::PriorityQueue() = default;
 
 template<class T>
-PriorityQueue<T>::~PriorityQueue() = default;
-
-template<class T>
 PriorityQueue<T>::PriorityQueue(const PriorityQueue &other)
     :data(other.data) {}
 
@@ -25,23 +22,28 @@ void PriorityQueue<T>::put(const T &value) {
 }
 
 template<class T>
+PriorityQueue<T>::PriorityQueue(const T value) {
+    put(value);
+}
+
+template<class T>
 const T &PriorityQueue<T>::top() const {
   if (empty())
-    throw std::out_of_range("Cant top() because queue is empty");
+    throw std::string("Cant top() because queue is empty");
   return data.back();
 }
 
 template<class T>
 void PriorityQueue<T>::pop() {
   if (empty())
-    throw std::out_of_range("Cant pop() because queue is empty");
+    throw std::string("Cant pop() because queue is empty");
   data.pop_back();
 }
 
 template<class T>
 T PriorityQueue<T>::get() {
   if (empty())
-    throw std::out_of_range("Cant get() because queue is empty");
+    throw std::string("Cant get() because queue is empty");
   T value = data.back();
   data.pop_back();
   return value;
