@@ -1,0 +1,76 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "With this application you can determine if a point falls within a triangle."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_If_Triangle_Contains_Point
+    COMMAND ${APPLICATION} triangle 0 0 0 1 1 0 point 0.3 0.3
+)
+set_tests_properties (${prefix}_can_Print_If_Triangle_Contains_Point PROPERTIES
+    PASS_REGULAR_EXPRESSION "Triangle contains point"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_If_Triangle_Does_Not_Contain_Point
+    COMMAND ${APPLICATION} triangle 0 0 0 1 1 0 point 1 1
+)
+set_tests_properties (${prefix}_can_Print_If_Triangle_Does_Not_Contain_Point PROPERTIES
+    PASS_REGULAR_EXPRESSION "Triangle does not contain point"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Error_If_Incorrect_Key
+    COMMAND ${APPLICATION} triangle 0 0 0 1 1 0 point 1 1 check
+)
+set_tests_properties (${prefix}_print_Error_If_Incorrect_Key PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: unknown key check"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Error_If_Incorrect_Param_In_Triangle
+    COMMAND ${APPLICATION} triangle 0 0 incorrect 1 1 0 point 1 1
+)
+set_tests_properties (${prefix}_print_Error_If_Incorrect_Param_In_Triangle PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: incorrect param in triangle"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Error_If_Incorrect_Param_In_Point
+    COMMAND ${APPLICATION} triangle 0 0 0 1 1 0 point incorrect 1
+)
+set_tests_properties (${prefix}_print_Error_If_Incorrect_Param_In_Point PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: incorrect param in point"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Error_If_Missing_Point
+    COMMAND ${APPLICATION} triangle 0 0 0 1 1 0
+)
+set_tests_properties (${prefix}_print_Error_If_Missing_Point PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: missing point parameter"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Error_If_Missing_Triangle
+    COMMAND ${APPLICATION} point 0 0
+)
+set_tests_properties (${prefix}_print_Error_If_Missing_Triangle PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: missing triangle parameter"
+    LABELS "${MODULE}")
