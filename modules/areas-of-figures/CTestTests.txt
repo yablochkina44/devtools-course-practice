@@ -1,0 +1,76 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This application is used to find the areas of figures"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detect_Invalid_Argument_Format
+    COMMAND ${APPLICATION} 2.0 asdfasdf
+)
+set_tests_properties (${prefix}_detect_Invalid_Argument_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Parsing is failed. Invalid argument format!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detect_Invalid_Argument_Format2
+    COMMAND ${APPLICATION} dosomething
+)
+set_tests_properties (${prefix}_detect_Invalid_Argument_Format2 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Parsing is failed. Invalid argument format!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detect_Incorrect_Number_of_Arguments
+    COMMAND ${APPLICATION} 2.0 1.1 2.2 3.0
+)
+set_tests_properties (${prefix}_detect_Incorrect_Number_of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Input must contain no more than three arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detect_Negative_Number
+    COMMAND ${APPLICATION} -10.0 1.5
+)
+set_tests_properties (${prefix}_detect_Negative_Number PROPERTIES
+    PASS_REGULAR_EXPRESSION "Argument is negative or zero:"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_Sphere_Area
+    COMMAND ${APPLICATION} 3.0
+)
+set_tests_properties (${prefix}_calculate_Sphere_Area PROPERTIES
+    PASS_REGULAR_EXPRESSION "Sphere area is"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_Cylinder_Area
+    COMMAND ${APPLICATION} 3.0 2.0
+)
+set_tests_properties (${prefix}_calculate_Cylinder_Area PROPERTIES
+    PASS_REGULAR_EXPRESSION "Cylinder area is"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_Parallelepiped_Area
+    COMMAND ${APPLICATION} 3.0 2.0 10.0
+)
+set_tests_properties (${prefix}_calculate_Parallelepiped_Area PROPERTIES
+    PASS_REGULAR_EXPRESSION "Parallelepiped area is"
+    LABELS "${MODULE}")
