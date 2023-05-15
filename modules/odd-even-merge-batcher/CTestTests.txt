@@ -1,0 +1,36 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_start
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_start PROPERTIES
+    LABELS "${MODULE}")
+    
+add_test(
+    NAME ${prefix}_start_5
+    COMMAND ${APPLICATION} 5
+)
+set_tests_properties (${prefix}_start_5 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Sorted array:"
+    LABELS "${MODULE}")
+    
+add_test(
+    NAME ${prefix}_start_20
+    COMMAND ${APPLICATION} 20
+)
+set_tests_properties (${prefix}_start_20 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Sorted array:"
+    LABELS "${MODULE}")
+    
+add_test(
+    NAME ${prefix}_start_50
+    COMMAND ${APPLICATION} 50
+)
+set_tests_properties (${prefix}_start_50 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Sorted array:"
+    LABELS "${MODULE}")
