@@ -1,0 +1,84 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This app performs basic operations with fractions."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_D2
+    COMMAND ${APPLICATION} 1/2 + 3/4
+)
+set_tests_properties (${prefix}_can_D2 PROPERTIES
+    PASS_REGULAR_EXPRESSION "5/4"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_D3
+    COMMAND ${APPLICATION} 5/6 - 1/6
+)
+set_tests_properties (${prefix}_can_D3 PROPERTIES
+    PASS_REGULAR_EXPRESSION "2/3"
+    LABELS "${MODULE}")
+	
+add_test(
+    NAME ${prefix}_can_D4
+    COMMAND ${APPLICATION} 2/3 * 4/5
+)
+set_tests_properties (${prefix}_can_D4 PROPERTIES
+    PASS_REGULAR_EXPRESSION "8/15"
+    LABELS "${MODULE}")
+	
+add_test(
+    NAME ${prefix}_can_D5
+    COMMAND ${APPLICATION} 5/8 / 3/4
+)
+set_tests_properties (${prefix}_can_D5 PROPERTIES
+    PASS_REGULAR_EXPRESSION "5/6"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_D6
+    COMMAND ${APPLICATION} 3/4 == 3/4
+)
+set_tests_properties (${prefix}_can_D6 PROPERTIES
+    PASS_REGULAR_EXPRESSION "true"
+    LABELS "${MODULE}")
+	
+add_test(
+    NAME ${prefix}_can_D7
+    COMMAND ${APPLICATION} 1/2 != 3/4
+)
+set_tests_properties (${prefix}_can_D7 PROPERTIES
+    PASS_REGULAR_EXPRESSION "true"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_D8
+    COMMAND ${APPLICATION} 1/2 ^ 3/4
+)
+set_tests_properties (${prefix}_can_D8 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Invalid operation"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_D9
+    COMMAND ${APPLICATION} 1/2/3 + 3/4
+)
+set_tests_properties (${prefix}_can_D9 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong fraction format!"
+    LABELS "${MODULE}")
