@@ -1,0 +1,85 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This application finds the longest common"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 1 3
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Should be 4 arguments."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments_Without_Size
+    COMMAND ${APPLICATION} 0 
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments_Without_Size PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Shoud be at least 2 arguments"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Size
+    COMMAND ${APPLICATION} 1 wrong_num 2 3
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Size PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Size is not a number!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Vector_Element
+    COMMAND ${APPLICATION} 1 1 wrong_num 3
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Vector_Element PROPERTIES
+    PASS_REGULAR_EXPRESSION "There is not a number among the elements"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Find_Subsequence_Equals_Vectors
+    COMMAND ${APPLICATION} 3 3 1 2 3 1 2 3
+)
+set_tests_properties (${prefix}_can_Find_Subsequence_Equals_Vectors PROPERTIES
+    PASS_REGULAR_EXPRESSION "1 2 3"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Find_Empty_Subsequence_Vectors
+    COMMAND ${APPLICATION} 3 3 1 2 3 4 5 6
+)
+set_tests_properties (${prefix}_can_Find_Empty_Subsequence_Vectors PROPERTIES
+    PASS_REGULAR_EXPRESSION ""
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Find_Subsequence_With_Empty_Vector
+    COMMAND ${APPLICATION} 3 0 1 2 3
+)
+set_tests_properties (${prefix}_can_Find_Subsequence_With_Empty_Vector PROPERTIES
+    PASS_REGULAR_EXPRESSION ""
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Find_Default_Subsequence
+    COMMAND ${APPLICATION} 7 4 9 8 7 6 5 4 3 9 8 7 3
+)
+set_tests_properties (${prefix}_can_Find_Default_Subsequence PROPERTIES
+    PASS_REGULAR_EXPRESSION "9 8 7 3"
+    LABELS "${MODULE}")
