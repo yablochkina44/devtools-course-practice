@@ -1,6 +1,7 @@
 ﻿  // Copyright 2023 Shokurov Daniil
 
 #include "include/euler_function.h"
+#include <stdexcept>
 
 // euler_function(int value) is equal to the
 // number of natural numbers from the segment[1, value − 1]
@@ -18,7 +19,7 @@
 // p[i] is prime number, n[j] is natural number
 int64_t euler_function(int64_t value) {
   // the euler function is defined for natural numbers
-  if (value <= 0) throw std::string("value <= 0");
+  if (value <= 0) throw std::runtime_error("value <= 0");
 
   int64_t n;
   int64_t numberOfCoprimeNumbers = 1;
