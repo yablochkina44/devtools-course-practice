@@ -1,0 +1,70 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+#
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is a gronsfeld cipher application."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 2
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Should be 3 arguments."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_run_code
+    COMMAND ${APPLICATION} 0 1 abc
+)
+set_tests_properties (${prefix}_can_run_code PROPERTIES
+    PASS_REGULAR_EXPRESSION "bcd"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number_Format
+    COMMAND ${APPLICATION} 1 wrong bbb
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Not a number!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number
+    COMMAND ${APPLICATION} 1 50_0 aaa
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong number!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Flag
+    COMMAND ${APPLICATION} Wrong 10_0 aaa
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Flag PROPERTIES
+    PASS_REGULAR_EXPRESSION "Flag not a number!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Str
+    COMMAND ${APPLICATION} 1 10_5 aa31!4%a
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Str PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong string!"
+    LABELS "${MODULE}")
