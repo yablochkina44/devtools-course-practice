@@ -1,0 +1,60 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_go
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_go PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_helping
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_helping PROPERTIES
+    PASS_REGULAR_EXPRESSION "This application is designed to translate"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_bad_arguments
+    COMMAND ${APPLICATION} 2XVLMCI32
+)
+set_tests_properties (${prefix}_bad_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Invalid expression"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_bad_arguments2
+    COMMAND ${APPLICATION} asdf
+)
+set_tests_properties (${prefix}_bad_arguments2 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Invalid expression"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_to_many_arguments
+    COMMAND ${APPLICATION} 2 4 5
+)
+set_tests_properties (${prefix}_to_many_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Maksimalno 2 arguments"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_convert_arab
+    COMMAND ${APPLICATION} I
+)
+set_tests_properties (${prefix}_convert_arab PROPERTIES
+    PASS_REGULAR_EXPRESSION "esultat of convert in Arabic is:"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_convert_rom
+    COMMAND ${APPLICATION} 32
+)
+set_tests_properties (${prefix}_convert_rom PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result of convert in Roman is:"
+    LABELS "${MODULE}")
