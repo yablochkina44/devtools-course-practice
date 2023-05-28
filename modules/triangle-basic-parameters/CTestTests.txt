@@ -3,3 +3,50 @@
 #############################################
 
 set(prefix "${MODULE}")
+
+add_test(NAME ${prefix}_can_launch
+    COMMAND ${APPLICATION})
+set_tests_properties(${prefix}_can_launch PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_print_clue
+    COMMAND ${APPLICATION})
+set_tests_properties (${prefix}_print_clue PROPERTIES
+    PASS_REGULAR_EXPRESSION "App was created to show coordinates points of verts "
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_can_launch_with_diff_arguments
+    COMMAND ${APPLICATION} 0,0 1,1 2,0 perimeter)
+set_tests_properties(${prefix}_can_launch_with_diff_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "4.828427"
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_run_with_bad_number_of_arguments
+    COMMAND ${APPLICATION} 0,0 0,0 0,0 s 5 1)
+set_tests_properties(${prefix}_run_with_bad_number_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Text of error: arguments more than its needed"
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_run_with_bad_amount_of_arguments
+    COMMAND ${APPLICATION} 0,0 0,0 0,0)
+set_tests_properties(${prefix}_run_with_bad_amount_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Text of error: arguments not enough"
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_can_calc_perimeter
+    COMMAND ${APPLICATION} 0,0 1,1 2,0 perimeter)
+set_tests_properties(${prefix}_can_calc_perimeter PROPERTIES
+    PASS_REGULAR_EXPRESSION "4.828427"
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_can_calc_square
+    COMMAND ${APPLICATION} -1,1 0,5 1,1 square)
+set_tests_properties(${prefix}_can_calc_square PROPERTIES
+    PASS_REGULAR_EXPRESSION "4"
+    LABELS "${MODULE}")
+
+add_test(NAME ${prefix}_can_calc_height
+    COMMAND ${APPLICATION} 1,3 5,10 9,9 height 1)
+set_tests_properties(${prefix}_can_calc_height PROPERTIES
+    PASS_REGULAR_EXPRESSION "32"
+    LABELS "${MODULE}")
