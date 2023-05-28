@@ -19,18 +19,15 @@ class polynomial_calculator {
     int GetSize() const;
     double value(double x);
 
-    bool operator ==
-        (const polynomial_calculator& P) const;
-    bool operator !=
-        (const polynomial_calculator& P) const;
-    polynomial_calculator operator +
-        (const polynomial_calculator& P);
-    polynomial_calculator operator -
-        (const polynomial_calculator& P);
-    polynomial_calculator operator *
-        (const polynomial_calculator& P);
-    polynomial_calculator operator + (const double& _Num) const;
-    polynomial_calculator operator - (const double& _Num) const;
-    polynomial_calculator operator * (const double& _Num) const;
+    bool operator==(const polynomial_calculator& P) const;
+    bool operator!=(const polynomial_calculator& P) const;
+    polynomial_calculator operator+(const polynomial_calculator& P);
+    polynomial_calculator operator-(const polynomial_calculator& P);
+    polynomial_calculator operator*(const polynomial_calculator& P);
+    polynomial_calculator operator+(const double& _Num) const;
+    polynomial_calculator operator-(const double& _Num) const;
+    polynomial_calculator operator*(const double& _Num) const;
+    friend std::ostream& operator<<(std::ostream& out,
+        const polynomial_calculator& _polinom);
 };
 #endif  // MODULES_POLYNOMIAL_CALCULATOR_INCLUDE_POLYNOMIAL_CALCULATOR_H_
