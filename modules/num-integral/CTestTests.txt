@@ -1,0 +1,84 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_print_Help
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_print_Help PROPERTIES
+    PASS_REGULAR_EXPRESSION "Usage:"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detector_a_one_argument
+    COMMAND ${APPLICATION} 1
+)
+set_tests_properties (${prefix}_detector_a_one_argument PROPERTIES
+    PASS_REGULAR_EXPRESSION "Incorrect number of arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detector_a_two_number_of_arguments
+    COMMAND ${APPLICATION} 1 2
+)
+set_tests_properties (${prefix}_detector_a_two_number_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Incorrect number of arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detector_a_four_number_of_arguments
+    COMMAND ${APPLICATION} 1 2 3 4
+)
+set_tests_properties (${prefix}_detector_a_four_number_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Incorrect number of arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detector_a_six_number_of_arguments
+    COMMAND ${APPLICATION} 1 2 3 4 5 6
+)
+set_tests_properties (${prefix}_detector_a_six_number_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Incorrect number of arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_detector_of_a_large_number_of_arguments
+    COMMAND ${APPLICATION} 1 4 6 7 8 9 10 12 13
+)
+set_tests_properties (${prefix}_detector_of_a_large_number_of_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Too many arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_integral1D
+    COMMAND ${APPLICATION} 1 4 150
+)
+set_tests_properties (${prefix}_calculate_integral1D PROPERTIES
+    PASS_REGULAR_EXPRESSION "Integral 1D: "
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_integral2D
+    COMMAND ${APPLICATION} 1 5 7 8 150
+)
+set_tests_properties (${prefix}_calculate_integral2D PROPERTIES
+    PASS_REGULAR_EXPRESSION "Integral 2D: "
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculate_integral3D
+    COMMAND ${APPLICATION} 1 2 3 4 5 6 7
+)
+set_tests_properties (${prefix}_calculate_integral3D PROPERTIES
+    PASS_REGULAR_EXPRESSION "Integral 3D: "
+    LABELS "${MODULE}")
