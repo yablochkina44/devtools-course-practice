@@ -3,3 +3,84 @@
 #############################################
 
 set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This application can do operations with 3d vectors"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 2 2 get_norma 2 5 4 8
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong number of arguments."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number
+    COMMAND ${APPLICATION} 1 +a 2 get_norma
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong format of number"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Operation
+    COMMAND ${APPLICATION} 2 9 5 antihelp
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Operation PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong format of operation"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Get_Norma_of_Vector
+    COMMAND ${APPLICATION} 2 4 4 get_norma
+)
+set_tests_properties (${prefix}_can_Get_Norma_of_Vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "Norm = 6"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Get_Normalization_Of_Not_Null_Vector
+    COMMAND ${APPLICATION} 6 8 0 get_normalization
+)
+set_tests_properties (${prefix}_can_Get_Normalization_Of_Not_Null_Vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "0.6,0.8,0"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Count_Scalar_Mult
+    COMMAND ${APPLICATION} 1 5 1 scalar_mult 3 1 2
+)
+set_tests_properties (${prefix}_can_Count_Scalar_Mult PROPERTIES
+    PASS_REGULAR_EXPRESSION "10"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Count_Vector_Mult
+    COMMAND ${APPLICATION} 1 5 1 vector_mult 3 1 2
+)
+set_tests_properties (${prefix}_can_Count_Vector_Mult PROPERTIES
+    PASS_REGULAR_EXPRESSION "9,1,-14"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_Get_Normalization_Of_Null_Vector
+    COMMAND ${APPLICATION} 0 0 0 get_normalization
+)
+set_tests_properties (${prefix}_cant_Get_Normalization_Of_Null_Vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "No normalization!"
+    LABELS "${MODULE}")
+
