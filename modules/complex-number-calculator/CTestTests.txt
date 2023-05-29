@@ -1,0 +1,108 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Please provide arguments in the following format"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 2 3 4
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: got 5 arguments but expected 6"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number_Format
+    COMMAND ${APPLICATION} 1 dhcp 2 3 +
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "unable to parse dhcp"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Ignore_All_Chars_Instead_Of_First_In_Operation_Str
+    COMMAND ${APPLICATION} 1 1 2 3 +trash
+)
+set_tests_properties (${prefix}_can_Ignore_All_Chars_Instead_Of_First_In_Operation_Str PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result: { Real = 3.000000; Imaginary = 4.000000 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Params
+    COMMAND ${APPLICATION} 1ab i3p 2de 3f a+
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Params PROPERTIES
+    PASS_REGULAR_EXPRESSION "unable to parse i3p"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Add
+    COMMAND ${APPLICATION} 56.05 432.1 4231.5 465.5 +
+)
+set_tests_properties (${prefix}_can_Add PROPERTIES
+    PASS_REGULAR_EXPRESSION "{ Real = 4287.55; Imaginary = 897.6 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Diff
+    COMMAND ${APPLICATION} -137 15 112 -44.5 -
+)
+set_tests_properties (${prefix}_can_Diff PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result: { Real = -249; Imaginary = 59.5 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Mult
+    COMMAND ${APPLICATION} 100.5 500. 1123 14.8 *
+)
+set_tests_properties (${prefix}_can_Mult PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result: { Real = 105461.5; Imaginary = 562987.4 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Divide
+    COMMAND ${APPLICATION} 15.6 398342.1 91.421 1.1 /
+)
+set_tests_properties (${prefix}_can_Divide PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result: { Real = 52.590261; Imaginary = 4356.594773 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Division_By_Zero
+    COMMAND ${APPLICATION} 0 0 0 0 /
+)
+set_tests_properties (${prefix}_can_Detect_Division_By_Zero PROPERTIES
+    PASS_REGULAR_EXPRESSION "Error: got exception with message: Can't divide by zero"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Do_Op_With_Char_Suffix
+    COMMAND ${APPLICATION} 32a 4b 88ccd 2f +asdfb
+)
+set_tests_properties (${prefix}_can_Do_Op_With_Char_Suffix PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result: { Real = 120; Imaginary = 6 }"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Do_Op_With_Char_Prefix
+    COMMAND ${APPLICATION} a32 b4 ccd88 f2 +
+)
+set_tests_properties (${prefix}_can_Do_Op_With_Char_Prefix PROPERTIES
+    PASS_REGULAR_EXPRESSION "unable to parse ccd88"
+    LABELS "${MODULE}")
