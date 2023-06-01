@@ -1,0 +1,109 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is a number with different bases calculator application"
+    LABELS "${MODULE}")
+
+
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 2
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Should be 5 arguments."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number_Format
+    COMMAND ${APPLICATION} 1 ip 2 3 +
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong number format!"
+    LABELS "${MODULE}")
+
+
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Operation_Format
+    COMMAND ${APPLICATION} 1 1 2 3 +trash
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Operation_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong operation format!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Add_Binaries
+    COMMAND ${APPLICATION} 1010 2 11 2 +
+)
+set_tests_properties (${prefix}_can_Add_Binaries PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 1101"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Diff_With_Different_Bases
+    COMMAND ${APPLICATION} 5 8 4 2 -
+)
+set_tests_properties (${prefix}_can_Diff_With_Different_Bases PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 1"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Mult_With_Different_Bases
+    COMMAND ${APPLICATION} 13 16 4 8 *
+)
+set_tests_properties (${prefix}_can_Mult_With_Different_Bases PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 4C"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Divide_Binaries
+    COMMAND ${APPLICATION} 100 2 10 2 /
+)
+set_tests_properties (${prefix}_can_Divide_Binaries PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 10"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Divide_By_Zero
+    COMMAND ${APPLICATION} 5 10 0 10 /
+)
+set_tests_properties (${prefix}_can_Detect_Divide_By_Zero PROPERTIES
+    PASS_REGULAR_EXPRESSION "We cannot divide by zero!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Divide_With_Different_Bases
+    COMMAND ${APPLICATION} 12 16 3 8 /
+)
+set_tests_properties (${prefix}_can_Divide_With_Different_Bases PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 6"
+    LABELS "${MODULE}")
+ 
+add_test(
+    NAME ${prefix}_can_Add_With_Different_Bases
+    COMMAND ${APPLICATION} 12 16 3 8 +
+)
+set_tests_properties (${prefix}_can_Add_With_Different_Bases PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 15"
+    LABELS "${MODULE}")
+ 
+ 
+
+#####

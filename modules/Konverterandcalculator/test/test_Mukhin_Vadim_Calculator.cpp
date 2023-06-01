@@ -4,6 +4,7 @@
 
 #include "include/Calculator.h"
 #include "include/Converter.h"
+#include "include/Calculator_app.h"
 
 TEST(Mukhin_Vadim_Konverter_and_calculator, TEST_SUM) {
     std::string num1 = "1010";
