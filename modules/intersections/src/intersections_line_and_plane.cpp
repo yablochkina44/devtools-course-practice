@@ -1,4 +1,4 @@
-// Copyright 2023 Lapin Dmitriy
+// Copyright 2023 Kruglikova Valeriia
 
 #include<utility>
 #include<iostream>

@@ -1,0 +1,36 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_intersection_exists
+    COMMAND ${APPLICATION} 3 2 3 4 1 2 1 1 2 3
+)
+set_tests_properties (${prefix}_intersection_exists PROPERTIES
+    PASS_REGULAR_EXPRESSION "A straight line intersects a plane."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_overlap_case
+    COMMAND ${APPLICATION} 1 0 -1 0 0 1 0 1 1 1
+)
+set_tests_properties (${prefix}_overlap_case PROPERTIES
+    PASS_REGULAR_EXPRESSION "A straight line belongs a plane"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_parallel_case
+    COMMAND ${APPLICATION} 1 0 -1 0 0 0 -1 1 1 1
+)
+set_tests_properties (${prefix}_parallel_case PROPERTIES
+    PASS_REGULAR_EXPRESSION "A straight line parallel a plane"
+    LABELS "${MODULE}")
