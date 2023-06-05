@@ -1,0 +1,56 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This program provides the ability to"
+    LABELS "${MODULE}")
+add_test(
+    NAME ${prefix}_incorrect_arguments
+    COMMAND ${APPLICATION} 0001111110 Hello
+)
+set_tests_properties (${prefix}_incorrect_arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "Invalid argument"
+    LABELS "${MODULE}")
+if (MSVC)
+add_test(
+    NAME ${prefix}_can_decode
+    COMMAND ${APPLICATION} 0001111110 l2 H1 e1 o1
+)
+set_tests_properties (${prefix}_can_decode PROPERTIES
+    PASS_REGULAR_EXPRESSION "Hello"
+    LABELS "${MODULE}")
+endif(MSVC)
+if (UNIX)
+add_test(
+    NAME ${prefix}_can_decode
+    COMMAND ${APPLICATION} 1000111101 H1 o1 l2 e1
+)
+set_tests_properties (${prefix}_can_decode PROPERTIES
+    PASS_REGULAR_EXPRESSION "Hello"
+    LABELS "${MODULE}")
+endif(UNIX)
+if (MSVC)
+add_test(
+    NAME ${prefix}_can_encode
+    COMMAND ${APPLICATION} Hello
+)
+set_tests_properties (${prefix}_can_encode PROPERTIES
+    PASS_REGULAR_EXPRESSION "0001111110"
+    LABELS "${MODULE}")
+endif(MSVC)
+if (UNIX)
+add_test(
+    NAME ${prefix}_can_encode
+    COMMAND ${APPLICATION} Hello
+)
+set_tests_properties (${prefix}_can_encode PROPERTIES
+    PASS_REGULAR_EXPRESSION "1000111101"
+    LABELS "${MODULE}")
+endif(UNIX)
