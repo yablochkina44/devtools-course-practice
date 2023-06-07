@@ -1,0 +1,186 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is binary tree application."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_insert_element
+    COMMAND ${APPLICATION} insert 5
+)
+set_tests_properties (${prefix}_can_insert_element PROPERTIES
+    PASS_REGULAR_EXPRESSION "Element placed in tree."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_insert_duplicate_element
+    COMMAND ${APPLICATION} insert 5 insert 5
+)
+set_tests_properties (${prefix}_cant_insert_duplicate_element PROPERTIES
+    PASS_REGULAR_EXPRESSION "Can't insert duplicate value."
+    LABELS "${MODULE}")
+
+
+add_test(
+    NAME ${prefix}_can_find_element
+    COMMAND ${APPLICATION} insert 5 find 5
+)
+set_tests_properties (${prefix}_can_find_element PROPERTIES
+    PASS_REGULAR_EXPRESSION "Element is in tree."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_find_element_when_empty
+    COMMAND ${APPLICATION} find 5
+)
+set_tests_properties (${prefix}_cant_find_element_when_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "Element isn't in tree."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_delete_element
+    COMMAND ${APPLICATION} insert 5 delete 5
+)
+set_tests_properties (${prefix}_can_delete_element PROPERTIES
+    PASS_REGULAR_EXPRESSION "Element removed from tree."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_delete_element_when_empty
+    COMMAND ${APPLICATION} delete 5
+)
+set_tests_properties (${prefix}_cant_delete_element_when_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "The item being deleted is not in the tree."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_find_without_argument_throw
+    COMMAND ${APPLICATION} find
+)
+set_tests_properties (${prefix}_find_without_argument_throw PROPERTIES
+    PASS_REGULAR_EXPRESSION "Argument expected"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_insert_without_argument_throw
+    COMMAND ${APPLICATION} insert
+)
+set_tests_properties (${prefix}_insert_without_argument_throw PROPERTIES
+    PASS_REGULAR_EXPRESSION "Argument expected"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_delete_without_argument_throw
+    COMMAND ${APPLICATION} delete
+)
+set_tests_properties (${prefix}_delete_without_argument_throw PROPERTIES
+    PASS_REGULAR_EXPRESSION "Argument expected"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_empty_when_empty
+    COMMAND ${APPLICATION} empty
+)
+set_tests_properties (${prefix}_empty_when_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "Binary tree is empty."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_not_empty_when_not_empty
+    COMMAND ${APPLICATION} insert 5 empty
+)
+set_tests_properties (${prefix}_not_empty_when_not_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "Binary tree isn't empty."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_set_next
+    COMMAND ${APPLICATION} insert 5 reset next
+)
+set_tests_properties (${prefix}_can_set_next PROPERTIES
+    PASS_REGULAR_EXPRESSION "Iterator moves to the next position."
+    LABELS "${MODULE}")
+
+
+add_test(
+    NAME ${prefix}_cant_set_next_without_reset
+    COMMAND ${APPLICATION} insert 5 next
+)
+set_tests_properties (${prefix}_cant_set_next_without_reset PROPERTIES
+    PASS_REGULAR_EXPRESSION "Can't set next."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_reset
+    COMMAND ${APPLICATION} insert 5 reset
+)
+set_tests_properties (${prefix}_can_reset PROPERTIES
+    PASS_REGULAR_EXPRESSION "Iterator resets."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_reset_when_empty
+    COMMAND ${APPLICATION} reset
+)
+set_tests_properties (${prefix}_cant_reset_when_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "Can't reset."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_get
+    COMMAND ${APPLICATION} insert 5 reset get
+)
+set_tests_properties (${prefix}_can_get PROPERTIES
+    PASS_REGULAR_EXPRESSION "Value: 5."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_get_when_iterator_corrupted
+    COMMAND ${APPLICATION} get
+)
+set_tests_properties (${prefix}_cant_get_when_iterator_corrupted PROPERTIES
+    PASS_REGULAR_EXPRESSION "Can't get."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_is_end_when_iterator_in_the_end
+    COMMAND ${APPLICATION} insert 5 reset end
+)
+set_tests_properties (${prefix}_is_end_when_iterator_in_the_end PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is the end..."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_isnt_end_when_iterator_not_in_the_end
+    COMMAND ${APPLICATION} insert 5 insert 10 reset end
+)
+set_tests_properties (${prefix}_isnt_end_when_iterator_not_in_the_end PROPERTIES
+    PASS_REGULAR_EXPRESSION "Not the end."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_wrong_operator
+    COMMAND ${APPLICATION} clear
+)
+set_tests_properties (${prefix}_wrong_operator PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: wrong operation."
+    LABELS "${MODULE}")
+
+
+
+
