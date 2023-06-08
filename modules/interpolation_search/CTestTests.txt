@@ -1,0 +1,103 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run_Application
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (
+    ${prefix}_can_Run_Application PROPERTIES
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_search_target_in_vector
+    COMMAND ${APPLICATION} 1 2 3 4 5 2
+)
+
+set_tests_properties (
+    ${prefix}_can_search_target_in_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "1"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_search_target_in_unsorted_vector
+    COMMAND ${APPLICATION} 5 4 3 2 1 2
+)
+
+set_tests_properties(
+    ${prefix}_can_search_target_in_unsorted_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "1"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_search_target_in_one_element_vector
+    COMMAND ${APPLICATION} 5 2
+)
+
+set_tests_properties(
+    ${prefix}_can_search_target_in_one_element_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "-1"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_search_target_in_negative_and_unsorted_vector
+    COMMAND ${APPLICATION} -1 -2 -3 -4 -5 -2
+)
+
+set_tests_properties(
+    ${prefix}_can_search_target_in_negative_and_unsorted_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "3"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_search_target_in_negative_and_sorted_vector
+    COMMAND ${APPLICATION} -5 -4 -3 -2 -1 -1
+)
+
+set_tests_properties(
+    ${prefix}_can_search_target_in_negative_and_sorted_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "4"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_validate_elements_of_vector
+    COMMAND ${APPLICATION} 1 2 p 3 1
+)
+
+set_tests_properties(
+    ${prefix}_can_validate_elements_of_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "Not a number!"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_validate_target_element
+    COMMAND ${APPLICATION} 1 2 4 3 p
+)
+
+set_tests_properties(
+    ${prefix}_can_validate_target_element PROPERTIES
+    PASS_REGULAR_EXPRESSION "Not a number!"
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_can_validate_negative_element_of_vector
+    COMMAND ${APPLICATION} 1 -p 4 3 1
+)
+
+set_tests_properties(
+    ${prefix}_can_validate_negative_element_of_vector PROPERTIES
+    PASS_REGULAR_EXPRESSION "Not a number!"
+    LABELS "${MODULE}"
+)
