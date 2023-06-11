@@ -1,14 +1,15 @@
-// Copyright 2023 Silaeva Natalya
+// Copyright 2023 Bykova Aleksandra
 
 #include "include/rb_tree.h"
 #include <vector>
+#include <stdexcept>
 
 Node::Node(int _data, Node *_left, Node *_right, Node *_parent, Color _color) :
-           data(_data), parent(_parent), left(_left),
-           right(_right), color(_color) {}
+    data(_data), parent(_parent), left(_left),
+    right(_right), color(_color) {}
 
 Node::Node(const Node& node) : data(node.data), parent(node.parent),
-           left(node.left), right(node.right), color(node.color) {}
+    left(node.left), right(node.right), color(node.color) {}
 
 Node& Node::operator=(const Node& node) {
     data = node.data;
@@ -35,13 +36,13 @@ bool Node::operator!=(const Node& node) {
 RBTree::RBTree() : _NIL(new Node{}), _root(_NIL) {}
 
 RBTree::RBTree(Node *node) : _NIL(new Node{}), _root(node) {
-        _root->left = _NIL;
-        _root->right = _NIL;
-        _root->parent = _NIL;
+    _root->left = _NIL;
+    _root->right = _NIL;
+    _root->parent = _NIL;
 }
 
 RBTree::RBTree(const std::vector<int>& vec) :
-               _NIL(new Node{}), _root(_NIL) {
+    _NIL(new Node{}), _root(_NIL) {
     for (int data : vec) {
         Node *node = new Node{data};
         insert(node);
@@ -81,7 +82,7 @@ Node* RBTree::find(const int& data) {
 
 void RBTree::insert(Node *node) {
     if (find(node->data) != _NIL)
-        throw "Node already in tree";
+        throw std::invalid_argument("Node already in tree");
 
     Node *tmp = _NIL;
     Node *tmp2 = _root;
@@ -113,7 +114,7 @@ void RBTree::insert(Node *node) {
 void RBTree::remove(const int& data) {
     Node* find_node = find(data);
     if (find_node == _NIL)
-        throw "No that data in tree";
+        throw std::invalid_argument("No that data in tree");
 
     Node *node = find_node;
     Node *tmp = node;
