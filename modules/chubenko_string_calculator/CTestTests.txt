@@ -1,0 +1,69 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_print_help
+    COMMAND ${APPLICATION} --help
+)
+set_tests_properties (
+    ${prefix}_can_print_help PROPERTIES
+    LABELS "${MODULE}"
+)
+
+add_test(
+    NAME ${prefix}_fails_on_invalid_amout_of_args
+    COMMAND ${APPLICATION} --flag1 --flag2
+)
+set_tests_properties (${prefix}_fails_on_invalid_amout_of_args PROPERTIES
+    PASS_REGULAR_EXPRESSION "Invalid argument amount, try --help or -h command"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_fails_on_incorrect_data
+    COMMAND ${APPLICATION} 6-asdb
+)
+set_tests_properties (${prefix}_fails_on_incorrect_data PROPERTIES
+    PASS_REGULAR_EXPRESSION "Calculation error!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_fails_on_divide_by_zero
+    COMMAND ${APPLICATION} 3/0
+)
+set_tests_properties (${prefix}_fails_on_divide_by_zero PROPERTIES
+    PASS_REGULAR_EXPRESSION "Calculation error!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculates_correctly1
+    COMMAND ${APPLICATION} 5-2*7
+)
+set_tests_properties (${prefix}_calculates_correctly1 PROPERTIES
+    PASS_REGULAR_EXPRESSION "-9"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculates_correctly2
+    COMMAND ${APPLICATION} 3^2+5
+)
+set_tests_properties (${prefix}_calculates_correctly2 PROPERTIES
+    PASS_REGULAR_EXPRESSION "14"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_calculates_correctly3
+    COMMAND ${APPLICATION} 3*4-2^3/2
+)
+set_tests_properties (${prefix}_calculates_correctly3 PROPERTIES
+    PASS_REGULAR_EXPRESSION "8"
+    LABELS "${MODULE}")
