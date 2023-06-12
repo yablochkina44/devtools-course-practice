@@ -1,0 +1,76 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is combination generator application"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_No_Command_Line_Arguments
+    COMMAND ${APPLICATION} 
+)
+set_tests_properties (${prefix}_No_Command_Line_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "No command line arguments!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Negative_N_Value
+    COMMAND ${APPLICATION} -3 2 1 2
+)
+set_tests_properties (${prefix}_Negative_N_Value PROPERTIES
+    PASS_REGULAR_EXPRESSION "n must be positive number!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Invalid_Number_Of_Vector_Elements
+    COMMAND ${APPLICATION} 3 2 1 2 3 4
+)
+set_tests_properties (${prefix}_Invalid_Number_Of_Vector_Elements PROPERTIES
+    PASS_REGULAR_EXPRESSION "Number of elements in vector should be equal n!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Wrong_K_Value
+    COMMAND ${APPLICATION} 3 5 1 2 3 
+)
+set_tests_properties (${prefix}_Wrong_K_Value PROPERTIES
+    PASS_REGULAR_EXPRESSION "K should be between 1 and N!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Wrong_Input
+    COMMAND ${APPLICATION} ljkf 2 1 kjkdf
+)
+set_tests_properties (${prefix}_Wrong_Input PROPERTIES
+    PASS_REGULAR_EXPRESSION "stoi"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Example_1
+    COMMAND ${APPLICATION} 3 1 1 2 3
+)
+set_tests_properties (${prefix}_Example_1 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Out:\n1 \n2 \n3 \n"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_Example_2
+    COMMAND ${APPLICATION} 3 2 1 2 3
+)
+set_tests_properties (${prefix}_Example_2 PROPERTIES
+    PASS_REGULAR_EXPRESSION "Out:\n1 1 \n1 2 \n1 3 \n2 2 \n2 3 \n3 3 \n"
+    LABELS "${MODULE}")
