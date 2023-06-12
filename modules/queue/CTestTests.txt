@@ -1,0 +1,93 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (${prefix}_can_Print_Help PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is application for create Queue."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_push_empty
+    COMMAND ${APPLICATION} push
+)
+set_tests_properties (${prefix}_cant_push_empty PROPERTIES
+    PASS_REGULAR_EXPRESSION "write element"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_parse_char_push
+    COMMAND ${APPLICATION} push 4 g
+)
+set_tests_properties (${prefix}_cant_parse_char_push PROPERTIES
+    PASS_REGULAR_EXPRESSION "please write int"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_cant_parse_char_pop
+    COMMAND ${APPLICATION} pop 4 g
+)
+set_tests_properties (${prefix}_cant_parse_char_pop PROPERTIES
+    PASS_REGULAR_EXPRESSION "please write int"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_error_cmd
+    COMMAND ${APPLICATION} what 4 5 2
+)
+set_tests_properties (${prefix}_error_cmd PROPERTIES
+    PASS_REGULAR_EXPRESSION "err op"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Push_Elements
+    COMMAND ${APPLICATION} push 3 2 1
+)
+set_tests_properties (${prefix}_can_Push_Elements PROPERTIES
+    PASS_REGULAR_EXPRESSION "( 3 2 1 )"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Push_Element
+    COMMAND ${APPLICATION} push 3
+)
+set_tests_properties (${prefix}_can_Push_Element PROPERTIES
+    PASS_REGULAR_EXPRESSION "( 3 )"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Pop_Elements
+    COMMAND ${APPLICATION} pop 3 2 1
+)
+set_tests_properties (${prefix}_can_Pop_Elements PROPERTIES
+    PASS_REGULAR_EXPRESSION "( 2 1 )"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Pop_Element
+    COMMAND ${APPLICATION} pop 6
+)
+set_tests_properties (${prefix}_can_Pop_Element PROPERTIES
+    PASS_REGULAR_EXPRESSION "empty"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_print_size
+    COMMAND ${APPLICATION} length 5 4 2
+)
+set_tests_properties (${prefix}_can_print_size PROPERTIES
+    PASS_REGULAR_EXPRESSION "size: 3"
+    LABELS "${MODULE}")
