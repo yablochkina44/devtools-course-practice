@@ -1,0 +1,134 @@
+#############################################
+##### Testing
+#############################################
+
+set(prefix "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Run
+    COMMAND ${APPLICATION}
+)
+set_tests_properties (${prefix}_can_Run PROPERTIES
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Print_Help_Without_Arguments
+    COMMAND ${APPLICATION}
+)
+
+set_tests_properties (${prefix}_can_Print_Help_Without_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "This is a long number calculator application"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Check_Number_Of_Arguments
+    COMMAND ${APPLICATION} 1 2
+)
+set_tests_properties (${prefix}_can_Check_Number_Of_Arguments PROPERTIES
+    PASS_REGULAR_EXPRESSION "ERROR: Should be 3 arguments."
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Number_Format
+    COMMAND ${APPLICATION} q1 3 +
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Number_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong number format!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Detect_Wrong_Operation_Format
+    COMMAND ${APPLICATION} 1 2 +q
+)
+set_tests_properties (${prefix}_can_Detect_Wrong_Operation_Format PROPERTIES
+    PASS_REGULAR_EXPRESSION "Wrong operation format!"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Add
+    COMMAND ${APPLICATION} 123 123 +
+)
+set_tests_properties (${prefix}_can_Add PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 246"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_Sub
+    COMMAND ${APPLICATION} 123 122 -
+)
+set_tests_properties (${prefix}_can_Sub PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 1"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_subtract_from_lesser
+    COMMAND ${APPLICATION} 13 25 -
+)
+set_tests_properties (${prefix}_can_subtract_from_lesser PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = -12"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_carry_last
+    COMMAND ${APPLICATION} 499 501 +
+)
+set_tests_properties (${prefix}_can_carry_last PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 1000"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_add_negative_number
+    COMMAND ${APPLICATION} 5 -30 +
+)
+set_tests_properties (${prefix}_can_add_negative_number PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = -25"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_big_ass_number
+    COMMAND ${APPLICATION} 123456789098765432123456789876543234567898765432345678 34567434566543456543234565432345654323456543234565432345 +
+)
+set_tests_properties (${prefix}_can_big_ass_number PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 34690891355642221975358022222222197558024441999997778023"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_sub_to_zero
+    COMMAND ${APPLICATION} 500 500 -
+)
+set_tests_properties (${prefix}_can_sub_to_zero PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 0"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_sub_carry
+    COMMAND ${APPLICATION} 101 22 -
+)
+set_tests_properties (${prefix}_can_sub_carry PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 79"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_chain_carry
+    COMMAND ${APPLICATION} 10001 2 -
+)
+set_tests_properties (${prefix}_can_chain_carry PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 9999"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_no_carry
+    COMMAND ${APPLICATION} 99999999999999999999999999999999 1 -
+)
+set_tests_properties (${prefix}_can_no_carry PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 99999999999999999999999999999998"
+    LABELS "${MODULE}")
+
+add_test(
+    NAME ${prefix}_can_normal_carry
+    COMMAND ${APPLICATION} 9990 25 -
+)
+set_tests_properties (${prefix}_can_normal_carry PROPERTIES
+    PASS_REGULAR_EXPRESSION "Result = 9965"
+    LABELS "${MODULE}")
+
